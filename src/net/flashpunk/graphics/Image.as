@@ -386,6 +386,24 @@ package net.flashpunk.graphics
 		/**
 		 * Centers the Image's originX/Y to its center.
 		 */
+		public function topCenterOrigin():void
+		{
+			originX = _bufferRect.width / 2;
+			originY = 0;
+		}
+		
+		/**
+		 * Centers the Image's originX/Y to its center.
+		 */
+		public function bottomCenterOrigin():void
+		{
+			originX = _bufferRect.width / 2;
+			originY = _bufferRect.height;
+		}
+		
+		/**
+		 * Centers the Image's originX/Y to its center.
+		 */
 		public function centerOO():void
 		{
 			centerOrigin();

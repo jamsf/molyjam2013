@@ -161,11 +161,13 @@ package net.molyjam.entities.persons
 				
 				if (Input.mouseX > x + width * 0.5)
 				{
+					_weapon.getSpriteMap().topCenterOrigin();
 					_weapon.getSpriteMap().play("rightSide");
 					_weapon.layer = layer - 2;
 				}
 				else
 				{
+					_weapon.getSpriteMap().bottomCenterOrigin();
 					_weapon.getSpriteMap().play("leftSide");
 					_weapon.layer = layer + 2;
 				}
@@ -173,8 +175,8 @@ package net.molyjam.entities.persons
 				// Move gun around according to angle and position of mouse
 				if (FP.distance(Input.mouseX, Input.mouseY, middleX - _weapon.width*0.5, middleY - _weapon.height*0.5 - 16 ) < 60)
 				{
-					_weapon.x = Input.mouseX;
-					_weapon.y = Input.mouseY;
+					_weapon.x = Input.mouseX - _weapon.originX;
+					_weapon.y = Input.mouseY - _weapon.originY;
 				}
 				else
 				{

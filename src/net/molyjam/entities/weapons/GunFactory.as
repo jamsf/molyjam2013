@@ -34,6 +34,7 @@ package net.molyjam.entities.weapons
 			spriteMap.add("leftSide", [1]);
 			spriteMap.add("rightSide", [2]);
 			spriteMap.centerOO();
+			
 			pistol.setSpriteMap(spriteMap);
 			pistol.graphic = spriteMap;
 			pistol.width = 36;
@@ -57,7 +58,8 @@ package net.molyjam.entities.weapons
 			spriteMap.add("notHolding", [0]);
 			spriteMap.add("leftSide", [1]);
 			spriteMap.add("rightSide", [2]);
-			spriteMap.centerOO();
+			spriteMap.topCenterOrigin();
+			
 			uzi.setSpriteMap(spriteMap);
 			uzi.graphic = spriteMap;
 			uzi.setHolding(person);
