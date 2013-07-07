@@ -18,28 +18,33 @@ package net.molyjam.entities.weapons
 		public function Gun()
 		{
 			super();
+			triggerDown = false;
 		}
 		
-		public function fire() : void
+		override public function update():void 
 		{
-			if (ammunition > 0)
-			{
-				if (automatic && fireTimer != 0)
-				{
-					--fireTimer;
-					return;
-				}
-				else if (!automatic && !triggerDown) 
-				{
-					return;
-				}
-				else
-				{
-					// TODO - create bullet
-					fireTimer = fireRate;
-					triggerDown = true;
-				}
-			}
+			super.update();
+			fireTimer = Math.max(0, fireTimer - 1);
+		}
+		
+		override public function fire(angle:Number) : void
+		{
+			FP.world.add(new Bullet(x, y + 12, angle));
+			fireTimer = fireRate;
+			triggerDown = true;
+			FP.console.log("BULLET ADDED");
+		}
+		
+		override public function canFire():Boolean 
+		{
+			if (ammunition < 0)
+				return false;
+			else if (automatic && fireTimer != 0)
+				return false;
+			else if (!automatic && triggerDown) 
+				return false;
+			else
+				return true;
 		}
 		
 		public function releaseTrigger() : void

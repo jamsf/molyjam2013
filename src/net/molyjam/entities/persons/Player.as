@@ -3,6 +3,7 @@ package net.molyjam.entities.persons
 	import flash.events.WeakFunctionClosure;
 	import flash.geom.Point;
 	import net.flashpunk.Entity;
+	import net.molyjam.entities.weapons.Gun;
 	import net.molyjam.entities.weapons.Weapon;
 	
 	import net.flashpunk.graphics.Image;
@@ -185,6 +186,27 @@ package net.molyjam.entities.persons
 				
 				// Rotate gun
 				_weapon.getSpriteMap().angle = angle;
+				
+				
+				// Check if firing
+				if (Input.mouseDown)
+				{
+					// Gun Recoil
+					if (_weapon.canFire())
+					{
+						var kickback : Number = 55 - (Math.random() * 10);
+						if (Math.random() > 0.5)
+							FP.angleXY(_weapon, angle + (Math.random()*20), kickback, middleX, middleY - 16);
+						else
+							FP.angleXY(_weapon, angle - (Math.random()*20), kickback, middleX, middleY - 16);
+						
+						_weapon.fire(angle);
+					}
+				}
+				else if (_weapon is Gun)
+				{
+					(_weapon as Gun).releaseTrigger();
+				}
 			}
 		}
 		

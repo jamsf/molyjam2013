@@ -49,6 +49,7 @@ package net.molyjam.entities.weapons
 			var uzi : Gun = new Gun();
 			uzi.ammunition = 30;
 			uzi.automatic = true;
+			uzi.fireRate = 5;
 			if (person == null)
 			{
 				uzi.x = x;

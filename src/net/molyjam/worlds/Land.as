@@ -23,7 +23,7 @@ package net.molyjam.worlds
 			
 			player = new Player();
 			add(player);
-			player.setWeapon(GunFactory.createUzi(player));
+			player.setWeapon(GunFactory.createPistol(player));
 		}
 		
 		override public function update():void 

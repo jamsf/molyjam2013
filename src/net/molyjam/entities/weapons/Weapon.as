@@ -68,6 +68,16 @@ package net.molyjam.entities.weapons
 			*/
 		}
 		
+		public function fire(angle:Number) : void 
+		{ 
+			
+		}
+		
+		public function canFire() : Boolean
+		{
+			return true;
+		}
+		
 		public function getHolding():Person { return _holding; }
 		public function setHolding(person:Person):void
 		{
