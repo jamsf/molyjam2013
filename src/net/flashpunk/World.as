@@ -83,6 +83,7 @@
 				i:int = _layerList.length;
 			while (i --)
 			{
+				
 				e = _renderLast[_layerList[i]];
 				while (e)
 				{

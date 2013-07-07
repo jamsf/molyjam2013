@@ -15,12 +15,15 @@ package net.molyjam
 	 */
 	public class Main extends Engine 
 	{
+		private var consoleOn : Boolean = true;
+		
 		public function Main():void 
 		{
 			super(800, 600, 60, false);
 
 			// Create initial world
 			FP.world = new Land();
+			FP.console.enable();
 		}
 
 		override public function init():void
@@ -33,7 +36,8 @@ package net.molyjam
 			super.update();
 
 			if (Input.check(Key.DELETE))
-				FP.console.enable();
+				if (consoleOn) FP.console.visible = true; else FP.console.visible = false;
+				
 			Input.mouseCursor = "hide";
 		}
 	}

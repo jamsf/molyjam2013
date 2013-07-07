@@ -1,5 +1,10 @@
 package net.molyjam.entities.persons 
 {
+	import flash.events.WeakFunctionClosure;
+	import flash.geom.Point;
+	import net.flashpunk.Entity;
+	import net.molyjam.entities.weapons.Weapon;
+	
 	import net.flashpunk.graphics.Image;
 	import net.flashpunk.graphics.Spritemap;
 	import net.flashpunk.utils.Input;
@@ -45,16 +50,19 @@ package net.molyjam.entities.persons
 			_spriteMap.add("leftBackRun", [19, 18, 17, 16], 8, true);
 			
 			graphic = _spriteMap;
+			_focus = new Point();
 		}
 		
 		override public function update():void 
 		{
 			updateMovement();
+			updateWeaponControl();
 			super.update();
 		}
 		
 		private function updateMovement():void
 		{
+			// Check for sprinting
 			if (Input.check(Key.SHIFT)) { _xMaxVel = 6; _yMaxVel = 4; }
 			else { _xMaxVel = 4; _yMaxVel = 3; }
 			
@@ -119,6 +127,63 @@ package net.molyjam.entities.persons
 				// FRICTION
 				_xVel = _xVel - Math.min(Math.abs(_xVel), _accel) * MathPlus.sgn(_xVel);
 			}
+			
+			// Update facing direction
+			_focus.x = Input.mouseX;
+			_focus.y = Input.mouseY;
+		}
+		
+		protected function updateWeaponControl() : void
+		{
+			// Check if we're picking up or dropping a weapon
+			if (Input.released(Key.E))
+			{
+				if (collide("Weapon", x, y))
+					FP.console.log("You are colliding with a gun");
+				else
+					FP.console.log("You are NOT colliding with a gun");
+				
+				var weapon : Weapon = collide("Weapon", x, y + height) as Weapon;
+				if (weapon === _weapon) weapon = null;
+				
+				dropWeapon();
+				
+				if (weapon)
+				{
+					_weapon = weapon;
+				}
+			}
+			
+			// Update Weapon Holding
+			if (_weapon != null)
+			{
+				var angle:Number = FP.angle(middleX, middleY, Input.mouseX, Input.mouseY);
+				
+				if (Input.mouseX > x + width * 0.5)
+				{
+					_weapon.getSpriteMap().play("rightSide");
+					_weapon.layer = layer - 2;
+				}
+				else
+				{
+					_weapon.getSpriteMap().play("leftSide");
+					_weapon.layer = layer + 2;
+				}
+				
+				// Move gun around according to angle and position of mouse
+				if (FP.distance(Input.mouseX, Input.mouseY, middleX - _weapon.width*0.5, middleY - _weapon.height*0.5 - 16 ) < 60)
+				{
+					_weapon.x = Input.mouseX;
+					_weapon.y = Input.mouseY;
+				}
+				else
+				{
+					FP.angleXY(_weapon, angle, 60, middleX, middleY - 16);
+				}
+				
+				// Rotate gun
+				_weapon.getSpriteMap().angle = angle;
+			}
 		}
 		
 		override protected function updateAnimation():void 
@@ -166,6 +231,18 @@ package net.molyjam.entities.persons
 					else
 						_spriteMap.play("rightStand");
 				}
+			}
+		}
+		
+		public function setWeapon(weapon:Weapon) : void { _weapon = weapon; }
+		
+		private function dropWeapon() : void
+		{
+			if (_weapon != null)
+			{
+				_weapon.getSpriteMap().play("notHolding");
+				_weapon.y = y + height - (_weapon.height * 0.5);
+				_weapon = null;
 			}
 		}
 	}

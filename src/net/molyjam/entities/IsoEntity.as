@@ -15,6 +15,12 @@ package net.molyjam.entities
 			
 		}
 		
+		override public function update():void 
+		{
+			super.update();
+			
+			layer = -y - height;
+		}
 	}
 
 }

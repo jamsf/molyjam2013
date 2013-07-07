@@ -1,13 +1,17 @@
 package net.molyjam.worlds 
 {
+	import net.flashpunk.utils.Input;
+	import net.flashpunk.utils.Key;
+	
 	import net.molyjam.entities.persons.Player;
+	import net.molyjam.entities.weapons.GunFactory;
+	
 	/**
 	 * ...
 	 * @author Jams
 	 */
 	public class Land extends IsoWorld
-	{
-		
+	{	
 		public function Land() 
 		{
 			
@@ -17,12 +21,15 @@ package net.molyjam.worlds
 		{
 			super.begin();
 			
-			add(new Player());
+			player = new Player();
+			add(player);
+			player.setWeapon(GunFactory.createUzi(player));
 		}
 		
 		override public function update():void 
 		{
 			super.update();
+			
 			
 		}
 	}

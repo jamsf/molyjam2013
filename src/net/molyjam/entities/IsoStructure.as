@@ -1,10 +1,11 @@
 package net.molyjam.entities 
 {
+	import net.flashpunk.Entity;
 	/**
 	 * ...
 	 * @author Jams
 	 */
-	public class IsoStructure 
+	public class IsoStructure extends Entity
 	{
 		
 		public function IsoStructure() 
@@ -12,6 +13,10 @@ package net.molyjam.entities
 			
 		}
 		
+		override public function update():void 
+		{	
+			super.update();
+		}
 	}
 
 }

@@ -319,7 +319,6 @@ package net.flashpunk
 			
 			var e:Entity = _world._typeFirst[type];
 			if (!e) return;
-			
 			_x = this.x; _y = this.y;
 			this.x = x; this.y = y;
 			var n:uint = array.length;
@@ -328,6 +327,11 @@ package net.flashpunk
 			{
 				while (e)
 				{
+					trace("Px: " + String(x - originX) + " | Py: " + String(y - originY));
+					trace("Pwidth: " + String(width) + " | Pheight: " + String(height));
+					trace("Ex: " + String(e.x - e.originX) + " | Ey: " + String(e.y - e.originY));
+					trace("Ewidth: " + String(e.width) + " | Eheight: " + String(e.height));
+					
 					if (e.collidable && e !== this
 					&& x - originX + width > e.x - e.originX
 					&& y - originY + height > e.y - e.originY
@@ -397,6 +401,17 @@ package net.flashpunk
 		 * Half the Entity's height.
 		 */
 		public function get halfHeight():Number { return height / 2; }
+		
+		
+		/**
+		 * The center x position of the Entity's hitbox.
+		 */
+		public function get middleX():Number { return x + width * 0.5; }
+		
+		/**
+		 * The center y position of the Entity's hitbox.
+		 */
+		public function get middleY():Number { return y + height * 0.5; }
 		
 		/**
 		 * The center x position of the Entity's hitbox.
